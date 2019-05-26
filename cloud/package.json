@@ -1,0 +1,28 @@
+{
+  "name": "watching-over-babies-cloud",
+  "version": "1.0.0",
+  "description": "BounIOT Watching over babies project cloud component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "baby",
+    "monitoring"
+  ],
+  "author": "BounIOT G1 <Umut Baran Zorlu, Umut Barış Öztunç, Mehmet Çalım>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^2.0.3",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.6.1",
+    "express": "^4.17.0",
+    "express-session": "^1.16.1",
+    "helmet": "^3.18.0",
+    "mongodb": "^3.2.4",
+    "mongoose": "^5.5.9",
+    "url": "^0.11.0"
+  }
+}
