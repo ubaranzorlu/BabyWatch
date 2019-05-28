@@ -73,7 +73,7 @@ router.get('/data/:babyId', (req,res) => {
         });
         response[1].push({
           x: data.timestamp,
-          y: data.motionCount
+          y: Math.round(data.motionCount/5)
         });
       });
       res.send(response);
