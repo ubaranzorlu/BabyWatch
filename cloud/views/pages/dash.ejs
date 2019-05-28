@@ -19,17 +19,35 @@
           <div class="content">
             <div class="container-fluid">
               <!-- your content here -->
-              <div id="dev-status" class="row">
+                <% if(devices.length > 0){ %>
+                <div id="dev-status" class="row active">
                 <div id="chart"></div>
-                <div class="overlay row align-items-center vertical-center text-center">
-                  <div class="col-md-12">
-                    <h1 class="status-big">NO BABY & DEVICE!</h1>
-                    <p class="status-sub">Add a baby and a device to visualize the data!</p>
-                    <a href="/dash/babies" class="btn btn-primary justify-content-center" style="text-align:center;">ADD BABY</a>
-                    <a href="/dash/devices" class="btn btn-primary justify-content-center" style="text-align:center;">ADD DEVICE</a>
+                </div>
+                <% }else if(babies.length > 0){ %>
+                <div id="dev-status" class="row">
+                  <div id="chart"></div>
+                    <div class="overlay row align-items-center vertical-center text-center">
+                      <div class="col-md-12">
+                        <h1 class="status-big">NO DEVICE!</h1>
+                        <p class="status-sub">Add a device to visualize the data!</p>
+                        <a href="/dash/devices" class="btn btn-primary justify-content-center" style="text-align:center;">ADD DEVICE</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+                <% }else{ %>
+                <div id="dev-status" class="row">
+                  <div id="chart"></div>
+                    <div class="overlay row align-items-center vertical-center text-center">
+                      <div class="col-md-12">
+                        <h1 class="status-big">NO BABY & DEVICE!</h1>
+                        <p class="status-sub">Add a baby and a device to visualize the data!</p>
+                        <a href="/dash/babies" class="btn btn-primary justify-content-center" style="text-align:center;">ADD BABY</a>
+                        <a href="/dash/devices" class="btn btn-primary justify-content-center" style="text-align:center;">ADD DEVICE</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
           </div>
 <% include ../parts/footer %>

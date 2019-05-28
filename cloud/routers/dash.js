@@ -1,5 +1,6 @@
 const express = require('express');
 const ObjectID = require('mongodb').ObjectID;
+const ISODate = require('mongodb').ISODate;
 const mongoose = require("mongoose");
 const CONFIG = require('../config.js');
 
@@ -42,12 +43,40 @@ const models = {
 };
 
 router.get('/',(req,res) => {
-    res.render("pages/dash", {
-        title: "Dashboard",
-        args: req.args,
-        nav: nav
+    models.device.find({user: req.session.username},(err,devices) => {
+      if(err) res.send(err);
+      models.baby.find({user: req.session.username},(err,babies) => {
+        if(err) res.send(err);
+        res.render("pages/dash", {
+          title: "Dashboard",
+          args: req.args,
+          nav: nav,
+          devices: devices,
+          babies: babies
+        });
+      });
     });
 });
+
+router.get('/data/:babyId', (req,res) => {
+  models.data.find({babyId: req.params.babyId, timestamp: {$gte: new Date(Date.now() - 3600000)}}, (err,doc) => {
+    if(err) res.send({err: err});
+
+    if(!doc){
+      res.send({err: "BabyWatch aktive edilmedi!"});
+    }else{
+      let response = [];
+      doc.forEach(data => {
+        response.push({
+          x: data.timestamp,
+          y: data.soundCount
+        });
+      });
+      res.send(response);
+    }
+  });
+});
+
 router.get('/babies',(req,res) => {
     models.baby.find({user: req.session.username},(err,doc) => {
       if(err) res.send(err);
