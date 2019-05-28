@@ -71,9 +71,9 @@ router.get('/data/:babyId', (req,res) => {
           x: data.timestamp,
           y: data.soundCount
         });
-        response[0].push({
+        response[1].push({
           x: data.timestamp,
-          y: data.soundCount
+          y: data.motionCount
         });
       });
       res.send(response);
