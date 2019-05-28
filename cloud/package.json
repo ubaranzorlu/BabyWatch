@@ -4,7 +4,7 @@
   "description": "BounIOT Watching over babies project cloud component",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "PORT=80 SESS=KIRMIZI node index.js"
   },
   "keywords": [
     "baby",
