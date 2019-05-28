@@ -61,10 +61,13 @@ app.use((req,res,next) => {
   next();
 });
 
+var api = require("./routers/api");
+
 app.use(function (req, res, next) {
     if (
         (req.session && req.session.username) ||
         req.url.includes("/login") ||
+        req.url.includes("/api") ||
         req.url.includes("/assets") ||
         req.url.includes("/semantic") ||
         req.url === "/favicon.ico" ||
@@ -77,10 +80,10 @@ app.use(function (req, res, next) {
     }
 });
 
-var api = require("./routers/api");
+
 var dash = require("./routers/dash");
 
-// app.use("/api", api);
+ app.use("/api", api);
  app.use("/dash", dash);
 // app.use("/user", user);
 

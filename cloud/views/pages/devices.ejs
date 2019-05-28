@@ -59,25 +59,27 @@
                     </div>
                     <form class="card-body" method="POST">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group bmd-form-group">
                                 <label class="bmd-label-floating">Device Id</label>
                                 <input type="text" class="form-control" name="deviceId">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label>Baby</label>
-                                <select class="form-control selectpicker form-control-inline" data-style="btn btn-link" >
+                        <div class="col-md-2">
+                          <i class="material-icons" style="margin-top:20px;">arrow_right_alt</i>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <select class="form-control selectpicker form-control-inline" data-style="btn btn-link" name="babyId">
                                     <% 
                                     if(babies.length > 0 ){ 
                                         babies.forEach(baby => {
                                         %>
-                                        <option class="baby" data-value="<%= baby._id %>"><%= baby.name %></option>
+                                        <option class="baby" value="<%= baby._id %>"><%= baby.name %></option>
                                     </tr>
                                     <% }); }else{
                                         %>
-                                        <option class="baby" data-value="">Please add a baby!</option>                          
+                                        <option class="baby" value="">Please add a baby!</option>                          
                                     <% } %>
                                 </select>
                             </div>

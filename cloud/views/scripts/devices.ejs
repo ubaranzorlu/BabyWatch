@@ -1,0 +1,12 @@
+<script>
+    $(document).ready(function(){
+        $('.device .del').click(function(){
+            let baby = $(this).closest('.device');
+            $.post('/dash/devices/del', {deviceId: $(this).closest('.device').data('value')},function(data){
+                if(data == "OK"){
+                    $(baby).remove();
+                }
+            });
+        });
+    });    
+</script>

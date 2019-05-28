@@ -1,15 +1,7 @@
 const express = require('express');
-const app = express();
-const bodyParser = require("body-parser");
-const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const mongoose = require("mongoose");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const MongoStore = require("connect-mongo")(session);
-const helmet = require('helmet');
 const CONFIG = require('../config.js');
-const url = require("url");
 
 let nav = [
   {
@@ -27,11 +19,11 @@ let nav = [
     url: '/dash/devices',
     icon: 'device_hub'
   },
-  {
-    title: 'User',
-    url: '/dash/user',
-    icon: 'person'
-  },
+  // {
+  //   title: 'User',
+  //   url: '/dash/user',
+  //   icon: 'person'
+  // },
   {
     title: 'Logout',
     url: '/logout',
@@ -41,8 +33,6 @@ let nav = [
 
 var router = express.Router();
 
-router.use(helmet());
-
 mongoose.connect(CONFIG.mongo.uri, { useNewUrlParser: true });
 const models = {
   user: require("../models/user").user,
@@ -50,21 +40,6 @@ const models = {
   device: require('../models/device').device,
   data: require("../models/data").data
 };
-
-router.use(cookieParser());
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-
-router.use(
-    session({
-      secret: CONFIG.sessionSecret,
-      resave: true,
-      saveUninitialized: false,
-      store: new MongoStore({
-        mongooseConnection: mongoose.connection
-      })
-    })
-);
 
 router.get('/',(req,res) => {
     res.render("pages/dash", {
@@ -154,9 +129,9 @@ if (
     { runValidators: true },
     function (err, doc) {
         if (err) {
-            res.send({ status: 'failed' });
+          res.send(err);
         } else {
-            res.send({ status: 'ok' });
+            res.redirect('/dash/devices');
         }
     }
   );
@@ -164,15 +139,16 @@ if (
 });
 
 router.post('/devices/del',(req,res) => {
+
   models.device.findOneAndUpdate(
     { _id: ObjectID(req.body.deviceId) },
     {user: null, baby: null},
     { runValidators: true },
     function (err, doc) {
         if (err) {
-            res.send({ status: 'failed' });
+            res.send(err);
         } else {
-            res.send({ status: 'ok' });
+            res.send("OK");
         }
     }
   );
