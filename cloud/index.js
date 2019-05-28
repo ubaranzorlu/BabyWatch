@@ -9,7 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const helmet = require('helmet');
 const CONFIG = require('./config.js');
 const url = require("url");
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(helmet());
 
