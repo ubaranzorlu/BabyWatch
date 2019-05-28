@@ -109,7 +109,7 @@
     }, 1000);
     <% }else{ %>    
     $(document).ready(function(){
-        var data = [];
+        var data = [[],[]];
         var options = {
         chart: {
             height: 350,
@@ -128,7 +128,7 @@
                 enabled: false
             }
         },
-        colors: ['#8a2387'],
+        colors: ['#8a2387', '#00E396'],
         dataLabels: {
             enabled: false
         },
@@ -136,7 +136,11 @@
             curve: 'smooth'
         },
         series: [{
-            data: data
+            name: "Sound Captured",
+            data: data[0]
+        },{
+            name: "Motion Captured",
+            data: data[1]
         }],
         markers: {
             size: 0
@@ -146,7 +150,7 @@
             range: 3540000,
         },
         yaxis: {
-            max: 100
+            max: 40
         },
         legend: {
             show: false
@@ -159,20 +163,28 @@
     );
 
     chart.render();
-    $.get('/dash/data/5ced9948df1e94289b3a5a81',series => {
+    $.get('/dash/data/<%= devices[0].baby %>',series => {
         if(!series.err){
             chart.updateSeries([{
-                data: series
+                name: "Sound Captured",
+                data: series[0]
+            },{
+                name: "Motion Captured",
+                data: series[1]
             }]);
         }else{
             alert(series.err);
         }
     });
     window.setInterval(function () {
-        $.get('/dash/data/5ced9948df1e94289b3a5a81',series => {
+        $.get('/dash/data/<%= devices[0].baby %>',series => {
             if(!series.err){
                 chart.updateSeries([{
-                    data: series
+                    name: "Sound Captured",
+                    data: series[0]
+                },{
+                    name: "Motion Captured",
+                    data: series[1]
                 }]);
             }else{
                 alert(series.err);

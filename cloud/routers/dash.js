@@ -65,9 +65,13 @@ router.get('/data/:babyId', (req,res) => {
     if(!doc){
       res.send({err: "BabyWatch aktive edilmedi!"});
     }else{
-      let response = [];
+      let response = [[],[]];
       doc.forEach(data => {
-        response.push({
+        response[0].push({
+          x: data.timestamp,
+          y: data.soundCount
+        });
+        response[0].push({
           x: data.timestamp,
           y: data.soundCount
         });
