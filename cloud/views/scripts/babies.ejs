@@ -1,0 +1,13 @@
+<script>
+    $(document).ready(function(){
+        $('.baby .del').click(function(){
+            let baby = $(this).closest('.baby');
+            $.post('/dash/babies/del', {babyId: $(this).closest('.baby').data('value')},function(data){
+                console.log(data);
+                if(data == "OK"){
+                    $(baby).remove();
+                }
+            });
+        });
+    });    
+</script>

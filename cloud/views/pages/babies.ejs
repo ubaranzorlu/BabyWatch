@@ -1,0 +1,123 @@
+<% include ../parts/header %>
+    <div class="wrapper ">
+        <% include ../parts/sidebar %>
+        <div class="main-panel">
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+              <div class="navbar-wrapper">
+              </div>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+              </button>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+          <div class="content">
+            <div class="container-fluid">
+              <!-- your content here -->
+              <h2>Babies</h2>
+              <div class="row">
+                <div class="col-lg-6 col-md-12">
+                  <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title">Babies</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                      <table class="table table-hover babies">
+                        <thead class="text-primary">
+                          <tr><th>Photo</th>
+                          <th>Name</th>
+                          <th>Age</th>
+                          <th>Gender</th>
+                          <th>Options</th>
+                        </tr></thead>
+                        <tbody>
+                          <% 
+                          function calculateAge(birthday) { // birthday is a date
+                            var ageDifMs = Date.now() - birthday.getTime();
+                            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                            return Math.abs(ageDate.getUTCFullYear() - 1970);
+                          }
+                          if(babies.length > 0 ){ 
+                              babies.forEach(baby => {
+                            %>
+                            <tr class="baby" data-value="<%= baby._id %>">
+                            <td><img src="/assets/img/baby.jpg" alt="<%= baby.name %> Bebek"></td>
+                            <td><%= baby.name %></td>
+                            <td><%= calculateAge(baby.birthDate) %></td>
+                            <td><%= baby.gender ? "Boy" : "Girl" %></td>
+                            <td><button class="btn btn-primary btn-fab btn-fab-mini btn-round del"><i class="material-icons">delete</i></button></td>
+                          </tr>
+                          <% }); }else{
+                            %>
+                            <tr><td>No baby!</td></tr>                            
+                          <% } %>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                  <div class="card card-profile baby">
+                    <div class="card-avatar">
+                        <img class="img" src="../assets/img/baby-ph.jpg">
+                    </div>
+                    <form class="card-body" method="POST">
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">Name</label>
+                                <input type="text" class="form-control" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">Surname</label>
+                                <input type="text" class="form-control" name="surname">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">Birthdate</label>
+                                <input type="text" class="form-control datetimepicker" name="birthdate">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                              <label style="margin-right:10px;">Gender</label>
+                                <div class="form-check form-check-radio form-check-inline">
+                                  <label class="form-check-label">
+                                      <input class="form-check-input" type="radio" name="gender" id="gender1" value="true" checked>
+                                      Boy
+                                      <span class="circle">
+                                          <span class="check"></span>
+                                      </span>
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-radio form-check-inline">
+                                  <label class="form-check-label">
+                                      <input class="form-check-input" type="radio" name="gender" id="gender2" value="false" >
+                                      Girl
+                                      <span class="circle">
+                                          <span class="check"></span>
+                                      </span>
+                                  </label>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Add</a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<% include ../parts/footer %>

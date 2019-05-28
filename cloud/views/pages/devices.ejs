@@ -1,0 +1,94 @@
+<% include ../parts/header %>
+    <div class="wrapper ">
+        <% include ../parts/sidebar %>
+        <div class="main-panel">
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+              <div class="navbar-wrapper">
+              </div>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+              </button>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+          <div class="content">
+            <div class="container-fluid">
+              <!-- your content here -->
+              <h2>Devices</h2>
+              <div class="row">
+                <div class="col-lg-6 col-md-12">
+                  <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title">Devices</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                      <table class="table table-hover babies">
+                        <thead class="text-primary">
+                          <tr><th>Id</th>
+                          <th>Assigned Baby</th>
+                        </tr></thead>
+                        <tbody>
+                          <% 
+                          if(devices.length > 0 ){ 
+                              devices.forEach(device => {
+                            %>
+                            <tr class="device" data-value="<%= device._id %>">
+                            <td><%= device._id %></td>
+                            <td><%= device.baby %></td>
+                            <td><button class="btn btn-primary btn-fab btn-fab-mini btn-round del"><i class="material-icons">delete</i></button></td>
+                          </tr>
+                          <% }); }else{
+                            %>
+                            <tr><td>No device!</td></tr>                            
+                          <% } %>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                  <div class="card card-profile device">
+                    <div class="card-avatar">
+                        <img class="img" src="../assets/img/device-ph.png">
+                    </div>
+                    <form class="card-body" method="POST">
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">Device Id</label>
+                                <input type="text" class="form-control" name="deviceId">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label>Baby</label>
+                                <select class="form-control selectpicker form-control-inline" data-style="btn btn-link" >
+                                    <% 
+                                    if(babies.length > 0 ){ 
+                                        babies.forEach(baby => {
+                                        %>
+                                        <option class="baby" data-value="<%= baby._id %>"><%= baby.name %></option>
+                                    </tr>
+                                    <% }); }else{
+                                        %>
+                                        <option class="baby" data-value="">Please add a baby!</option>                          
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary">Add</a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<% include ../parts/footer %>

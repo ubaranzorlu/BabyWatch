@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const helmet = require('helmet');
 const CONFIG = require('./config.js');
 const url = require("url");
+const PORT = 5000;
 
 app.use(helmet());
 
@@ -19,6 +20,24 @@ const models = {
   device: require('./models/device').device,
   data: require("./models/data").data
 };
+
+let nav = [
+  {
+    title: 'Homepage',
+    url: '/',
+    icon: 'home'
+  },
+  {
+    title: 'Login',
+    url: '/login',
+    icon: 'person'
+  },
+  {
+    title: 'Register',
+    url: '/register',
+    icon: 'person_add'
+  }
+];
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,9 +54,16 @@ app.use(
     })
   );
 app.use('/assets',express.static('public'));
+
+app.use((req,res,next) => {
+  req.args = {};
+  req.args.url = req.originalUrl;
+  next();
+});
+
 app.use(function (req, res, next) {
     if (
-        (req.session && req.session.userId) ||
+        (req.session && req.session.username) ||
         req.url.includes("/login") ||
         req.url.includes("/assets") ||
         req.url.includes("/semantic") ||
@@ -51,7 +77,6 @@ app.use(function (req, res, next) {
     }
 });
 
-var user = require("./routers/user");
 var api = require("./routers/api");
 var dash = require("./routers/dash");
 
@@ -62,15 +87,23 @@ var dash = require("./routers/dash");
 app.set("view engine", "ejs");
 
 app.get("/", function (req, res) {
-    (req.session && req.session.userId) ? res.redirect("/dash") : res.sendFile(__dirname + '/views/static/index.html');
+    (req.session && req.session.username) ? res.redirect("/dash") : res.sendFile(__dirname + '/views/static/index.html');
 });
 
 app.get("/register", function (req, res) {
-    res.sendFile(__dirname + '/views/static/register.html');
+  res.render("pages/register", {
+    title: "Register",
+    args: req.args,
+    nav: nav
+  });
 });
 
 app.get("/login", function (req, res) {
-    res.sendFile(__dirname + '/views/static/login.html');
+  res.render("pages/login", {
+    title: "Login",
+    args: req.args,
+    nav: nav
+  });
 });
 
 app.post("/register", function (req, res) {
@@ -81,6 +114,7 @@ app.post("/register", function (req, res) {
         var userData = {
         email: req.body.email,
         name: req.body.name,
+        username: req.body.username,
         surname: req.body.surname,
         password: req.body.password
         };
@@ -106,12 +140,13 @@ app.post("/login", function (req, res) {
             url.format({
               pathname: "/login",
               query: {
-                error: "Wrong login details!"
+                error: "Wrong login details!",
+                email : req.body.email || ''
               }
             })
           );
         } else {
-          req.session.userId = user._id;
+          req.session.username = user.username;
           return res.redirect("/dash");
         }
       });
@@ -120,7 +155,8 @@ app.post("/login", function (req, res) {
         url.format({
           pathname: "/login",
           query: {
-            error: "One or more field is empty!"
+            error: "One or more field is empty!",
+            email : req.body.email || ''
           }
         })
       );
@@ -139,7 +175,7 @@ app.get("/logout", function (req, res, next) {
     }
 });
 
-app.listen(5000, function () {
-    console.log("magic happens on *:5000");
+app.listen(PORT, function () {
+    console.log("magic happens on *:" + PORT);
 });
   

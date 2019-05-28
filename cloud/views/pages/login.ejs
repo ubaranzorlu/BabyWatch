@@ -1,0 +1,56 @@
+<% include ../parts/header %>
+<div class="wrapper ">
+        <% include ../parts/sidebar %>
+        <div class="main-panel">
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+              <div class="navbar-wrapper">
+              </div>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+              </button>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+          <div class="content">
+            <div class="container-fluid">
+              <!-- your content here -->
+              <div class="row justify-content-md-center">
+                  <div class="card col-md-6">
+                        <div class="card-header card-header-primary">
+                          <h4 class="card-title">Login</h4>
+                          <p class="card-category">Log in to your BabyWatch account</p>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">E-mail or Username</label>
+                                            <input type="text" class="form-control" name="email">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">Password</label>
+                                            <input type="password" class="form-control" name="password">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <a href="/forgot-password" class="pull-left" style="margin-top: 15px;">Forgot password?</a>
+                                    <button type="submit" class="btn btn-primary pull-right">LOGIN</button>
+                                    <a href="/register" class="btn btn-secondary pull-right" style="margin-right:10px">REGISTER</a>
+                                    <div class="clearfix"></div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+<% include ../parts/footer %>

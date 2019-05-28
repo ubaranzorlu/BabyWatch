@@ -8,6 +8,11 @@ var UserSchema = new mongoose.Schema({
       required: true,
       trim: true
     },
+    username: {
+      type: String,
+      unique: true,
+      required: true
+    },
     password: {
       type: String,
       required: true
@@ -31,7 +36,7 @@ UserSchema.pre("save", function (next) {
 var user = mongoose.model("user", UserSchema);
 
 user.authenticate = function (email, password, callback) {
-    user.findOne({ email: email }).exec(function (err, user) {
+    user.findOne({ $or: [{email: email},{username: email} ] }).exec(function (err, user) {
       if (err) {
         return callback(err);
       } else if (!user) {
