@@ -66,30 +66,15 @@ router.get('/data/:babyId', (req,res) => {
       res.send({err: "BabyWatch aktive edilmedi!"});
     }else{
       let response = [[],[],[]];
-      for(let i = 0; i < 60; i++){
-        response[0].push({
-          x: new Date(Math.round((Date.now() - (i*60000)) / 60000) * 60000).toISOString(),
-          y: null
-        });
-        response[1].push({
-          x: new Date(Math.round((Date.now() - (i*60000)) / 60000) * 60000).toISOString(),
-          y: null
-        });
-      }
-      response[0].sort((a, b) => a - b);
-      response[1].sort((a, b) => a - b);
       doc.forEach(data => {
-        let ts = new Date(Math.round(new Date(data.timestamp).getTime() / 60000) * 60000).toISOString();
-        let ith = response[0].findIndex(el => el.x === ts);
-        response[0][ith] = {
+        response[0].push({
           x: data.timestamp,
           y: data.soundCount
-        };  
-        ith = response[1].findIndex(el => el.x == ts);
-        response[1][ith] = {
+        });
+        response[1].push({
           x: data.timestamp,
           y: Math.round(data.motionCount/4)
-        };
+        });
         if(data.isCrying){
           response[2].push({
                 x: data.timestamp,
