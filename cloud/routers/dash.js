@@ -65,7 +65,7 @@ router.get('/data/:babyId', (req,res) => {
     if(!doc){
       res.send({err: "BabyWatch aktive edilmedi!"});
     }else{
-      let response = [[],[]];
+      let response = [[],[],[]];
       doc.forEach(data => {
         response[0].push({
           x: data.timestamp,
@@ -75,6 +75,28 @@ router.get('/data/:babyId', (req,res) => {
           x: data.timestamp,
           y: Math.round(data.motionCount/4)
         });
+        if(data.isCrying){
+          response[2].push({
+                x: data.timestamp,
+                y: data.soundCount,
+                marker: {
+                  size: 6,
+                  fillColor: "#fff",
+                  strokeColor: "#2698FF",
+                  radius: 2
+                },
+                label: {
+                  borderColor: "#FF4560",
+                  offsetY: 0,
+                  style: {
+                    color: "#fff",
+                    background: "#FF4560"
+                  },
+        
+                  text: "Crying"
+                }
+              });
+        }
       });
       res.send(response);
     }

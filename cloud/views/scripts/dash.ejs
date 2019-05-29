@@ -155,6 +155,9 @@
         legend: {
             show: false
         },
+        annotations : {
+            points : []
+        }
     }
 
     var chart = new ApexCharts(
@@ -163,8 +166,18 @@
     );
 
     chart.render();
+
     $.get('/dash/data/<%= devices[0].baby %>',series => {
         if(!series.err){
+             series[0].forEach((serie,i) => {
+                series[0][i].x = new Date(serie.x).getTime();
+            });
+             series[1].forEach((serie,i) => {
+                series[1][i].x = new Date(serie.x).getTime();
+            });
+            series[2].forEach((serie,i) => {
+                series[2][i].x = new Date(serie.x).getTime();
+            });
             chart.updateSeries([{
                 name: "Sound Captured",
                 data: series[0]
@@ -172,6 +185,11 @@
                 name: "Motion Captured",
                 data: series[1]
             }]);
+            chart.updateOptions({
+                annotations: {
+                    points: series[2]
+                }
+            });
         }else{
             alert(series.err);
         }
@@ -179,6 +197,15 @@
     window.setInterval(function () {
         $.get('/dash/data/<%= devices[0].baby %>',series => {
             if(!series.err){
+                series[0].forEach((serie,i) => {
+                series[0][i].x = new Date(serie.x).getTime();
+            });
+             series[1].forEach((serie,i) => {
+                series[1][i].x = new Date(serie.x).getTime();
+            });
+            series[2].forEach((serie,i) => {
+                series[2][i].x = new Date(serie.x).getTime();
+            });
                 chart.updateSeries([{
                     name: "Sound Captured",
                     data: series[0]
@@ -186,6 +213,11 @@
                     name: "Motion Captured",
                     data: series[1]
                 }]);
+                chart.updateOptions({
+          annotations: {
+            points: series[2]
+          }
+        });
             }else{
                 alert(series.err);
             }
