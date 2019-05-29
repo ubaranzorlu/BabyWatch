@@ -93,6 +93,13 @@ app.get("/", function (req, res) {
     (req.session && req.session.username) ? res.redirect("/dash") : res.sendFile(__dirname + '/views/static/index.html');
 });
 
+app.get('/sw.js', (req,res) => {
+  res.sendFile(__dirname + '/public/js/sw.js');
+});
+app.get('/manifest.json', (req,res) => {
+  res.sendFile(__dirname + '/public/js/manifest.json');
+});
+
 app.get("/register", function (req, res) {
   res.render("pages/register", {
     title: "Register",
