@@ -68,18 +68,18 @@ router.get('/data/:babyId', (req,res) => {
       let response = [[],[],[]];
       for(let i = 0; i < 60; i++){
         response[0].push({
-          x: new Date(Math.round((Date.now() - (i*60000)) / 60000) * 60000).getTime(),
+          x: new Date(Math.round((Date.now() - (i*60000)) / 60000) * 60000).toISOString(),
           y: null
         });
         response[1].push({
-          x: new Date(Math.round((Date.now() - (i*60000)) / 60000) * 60000).getTime(),
+          x: new Date(Math.round((Date.now() - (i*60000)) / 60000) * 60000).toISOString(),
           y: null
         });
       }
       response[0].sort((a, b) => a - b);
       response[1].sort((a, b) => a - b);
       doc.forEach(data => {
-        let ts = new Date(Math.round(new Date(data.timestamp).getTime() / 60000) * 60000).getTime();
+        let ts = new Date(Math.round(new Date(data.timestamp).getTime() / 60000) * 60000).toISOString();
         let ith = response[0].findIndex(el => el.x === ts);
         response[0][ith] = {
           x: data.timestamp,
