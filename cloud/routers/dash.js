@@ -86,14 +86,14 @@ router.get('/data/:babyId', (req,res) => {
                   radius: 2
                 },
                 label: {
-                  borderColor: "#FF4560",
+                  borderColor: "rgba(0,0,0,0)",
                   offsetY: 0,
                   style: {
-                    color: "#fff",
-                    background: "#FF4560"
+                    color: "#FF4560",
+                    background: "rgba(0,0,0,0)"
                   },
         
-                  text: "Crying"
+                  text: "Crying 😭"
                 }
               });
         }
